@@ -1,47 +1,45 @@
 #include "sort.h"
 
 /**
- * selection_sort - Calls function
- * @array: Array to be sorted
- * @size: Size of array given
- * Descrtiption: Function that sorts an array using the Selection
- * sort algotrithm
- * Return: 0
+ * swap_ints - Swap two integers in an array.
+ * @a: The first integer to swap.
+ * @b: The second integer to swap.
+ */
+void swap_ints(int *a, int *b)
+{
+	int tmp;
+
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
+
+/**
+ * selection_sort - Sort an array of integers in ascending order
+ *                  using the selection sort algorithm.
+ * @array: An array of integers.
+ * @size: The size of the array.
+ *
+ * Description: Prints the array after each swap.
  */
 void selection_sort(int *array, size_t size)
 {
-	unsigned int i, j, min_idx;
+	int *min;
+	size_t i, j;
 
-	if (!array)
+	if (array == NULL || size < 2)
 		return;
 
 	for (i = 0; i < size - 1; i++)
 	{
-		min_idx = i;
+		min = array + i;
 		for (j = i + 1; j < size; j++)
-			if (array[j] < array[min_idx])
-				min_idx = j;
+			min = (array[j] < *min) ? (array + j) : min;
 
-		if (i != min_idx)
+		if ((array + i) != min)
 		{
-			swap(&array[min_idx], &array[i]);
+			swap_ints(array + i, min);
 			print_array(array, size);
 		}
 	}
-}
-
-/**
- * swap - Function that swaps two values
- *
- * @a: Fisrt value
- * @b: Second value
- * Return: 0
- */
-void swap(int *a, int *b)
-{
-	int tmp;
-
-	tmp = *b;
-	*b = *a;
-	*a = tmp;
 }
